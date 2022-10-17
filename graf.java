@@ -43,8 +43,17 @@ public class graf{
             actorData actor = new actorData(nmID, name, ttIDs);
             actorArray.add(actor);
         }
-        for (actorData actorData : actorArray) {
-            System.out.println(actorData);
+        sc.close();
+
+        sc = new Scanner(new File("data/marvel_movies.tsv"));
+        ArrayList<movieData> movDat = new ArrayList<>();
+        while(sc.hasNextLine()){
+            String[] ss = sc.nextLine().split("\t");
+            String ttID = ss[0];
+            String name = ss[1];
+            String rating = ss[2];
+            String votes= ss[3];
+            movDat.add(new movieData(ttID, name, rating, votes));
         }
         
 
