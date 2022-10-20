@@ -2,7 +2,7 @@ ___________________________________________________________
 oppgave 1 bygg grafen
 
 skriv program som leser inputfilene, movies.tsv og actors.tsv
-og bygger grafen 
+og bygger grafen                                                    DONE
 
 skriv en prosedyre som teller antall noder og antall kanter
 

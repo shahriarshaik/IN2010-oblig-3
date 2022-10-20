@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+
 public class movieData {
+    ArrayList<actorData> actorListe = new ArrayList<>();
     String ttID;
     String name;
     String rating;
@@ -9,5 +12,10 @@ public class movieData {
         this.name=name;
         this.rating = rating;
         this.votes = votes; 
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

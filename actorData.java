@@ -4,6 +4,7 @@ public class actorData {
     String nmID;
     String name;
     ArrayList<String> ttIDs;
+    ArrayList<movieData> filmer = new ArrayList<>();
 
     public actorData(String nmID, String name, ArrayList<String> ttIDs){
         this.nmID = nmID;
