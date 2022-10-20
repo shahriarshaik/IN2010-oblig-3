@@ -19,31 +19,23 @@ public class graf{
         sc = new Scanner(new File("data/marvel_actors.tsv"));
 
         //while den har neste linje ----------------------------------------------
-        Scanner split;
+        //Scanner split;
         ArrayList<actorData> actorArray = new ArrayList<>();
         while(sc.hasNextLine()){
-            split = new Scanner(sc.nextLine());  //split inneholder: nm0000313	Jeff Bridges	tt0371746
-            String nmID = split.next();
-            String name = split.next();
+            String[] split = sc.nextLine().split("\t");  //split inneholder: nm0000313	Jeff Bridges	tt0371746
+            String nmID = split[0];
+            String name = split[1];
             ArrayList<String> ttIDs = new ArrayList<>();
-            while(split.hasNext()){
-                String analyse = split.next();
-                if(analyse.length() > 1){
-                    char en = analyse.charAt(0);
-                    char to = analyse.charAt(1);
-                    String begge = "" + en + to;
-                    if(!begge.equals("tt")){
-                        name = name + " " + analyse;
-                    }
-                    else{
-                        ttIDs.add(analyse);
-                    }
-                }
+            for (int i = 2; i < split.length; i++) {
+                ttIDs.add(split[i]);
             }
             actorData actor = new actorData(nmID, name, ttIDs);
             actorArray.add(actor);
         }
         sc.close();
+        for (actorData actorData : actorArray) {
+            System.out.println(actorData + " " + actorData.nmID);
+        }
 
         sc = new Scanner(new File("data/marvel_movies.tsv"));
         ArrayList<movieData> movDat = new ArrayList<>();
