@@ -1,8 +1,10 @@
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.io.BufferedReader;
 
 public class graf{
     public static void main(String[] args) throws Exception {
@@ -11,7 +13,9 @@ public class graf{
         
         /*denne delen har ansvaret for å telle--------------------------------- */
         int antall = 0;
-        Scanner sc = new Scanner(new File("data/marvel_actors.tsv"));
+        String actorsFileName = "data/actors.tsv";
+        Scanner sc = new Scanner(new File(actorsFileName));
+        //Scanner sc = new Scanner(new File("data/marvel_actors.tsv"));
         while(sc.hasNextLine()){
             sc.nextLine();
             antall++;
@@ -38,10 +42,32 @@ public class graf{
         sc.close();
 
         for (movieData movieData : movDat) {
-            System.out.println(movieData + " " + movieData.ttID);
+            //System.out.println(movieData + " " + movieData.ttID);
         }
+
+        sc = new Scanner(new File(actorsFileName), "UTF-8");
+        BufferedReader read = new BufferedReader(new FileReader(actorsFileName));
+        int antallAct = 0; 
+        while(read.readLine() !=null){
+            antallAct++;
+        }
+        System.out.println("while loop (buffer) har kjørt: " + antallAct);
+
+        antallAct = 0;
+        while(sc.hasNextLine()){
+            sc.nextLine();
+            antallAct++;
+            if(antallAct == 215){
+                System.out.println("debug line");
+            }
+        }
+        sc.close();
+        System.out.println("while loop har kjørt: " + antallAct);
+
+
+
         
-        sc = new Scanner(new File("data/marvel_actors.tsv"));
+        sc = new Scanner(new File(actorsFileName));
         //while den har neste linje ----------------------------------------------
         //Scanner split;
         ArrayList<actorData> actorArray = new ArrayList<>();
@@ -68,12 +94,12 @@ public class graf{
         sc.close();
         System.out.println("\n\n\n\n\n\n");
         for (actorData actorData : actorArray) {
-            System.out.println(actorData + " " + actorData.nmID);
+            //System.out.println(actorData + " " + actorData.nmID);
         }
 
         for (actorData actorData : actorArray) {
             if(actorData.filmer.size() > 1){
-                System.out.println(actorData);
+                //System.out.println(actorData);
             }
         }
 
