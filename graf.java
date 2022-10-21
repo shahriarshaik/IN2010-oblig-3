@@ -1,5 +1,3 @@
-import java.util.Scanner;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -8,30 +6,24 @@ import java.io.BufferedReader;
 
 public class graf{
     public static void main(String[] args) throws Exception {
+
+//----------------------generelle variabler------------------------------------
         int noder = 0;
         int kanter = 0;
-        
-        /*denne delen har ansvaret for å telle--------------------------------- */
-        int antall = 0;
-        String actorsFileName = "data/actors.tsv";
-        Scanner sc = new Scanner(new File(actorsFileName));
-        //Scanner sc = new Scanner(new File("data/marvel_actors.tsv"));
-        while(sc.hasNextLine()){
-            sc.nextLine();
-            antall++;
-        }
-        sc.close();
-        /*---------------------------------------------------------------------*/
-
-        //denne leser linjene ----------------------------------------------------
-        
         Dictionary<String, actorData> artistDict = new Hashtable<>();
         Dictionary<String, movieData> movieDict = new Hashtable<>();
-        
-        sc = new Scanner(new File("data/marvel_movies.tsv"));
+        String actorsFileName = "data/actors.tsv";
+        String moviessFileName = "data/movies.tsv";
+        BufferedReader reader = new BufferedReader(new FileReader(actorsFileName));
+//-----------------------------------------------------------------------------
+
+
+//---------------------denne leser film filen-------------------------------------
+        reader = new BufferedReader(new FileReader(moviessFileName));
+        String line;
         ArrayList<movieData> movDat = new ArrayList<>();
-        while(sc.hasNextLine()){ // nextline: tt0371746	Iron Man	7.9	1049777
-            String[] ss = sc.nextLine().split("\t");
+        while((line = reader.readLine()) != null){ // nextline: tt0371746	Iron Man	7.9	1049777
+            String[] ss = line.split("\t");
             String ttID = ss[0];
             String name = ss[1];
             String rating = ss[2];
@@ -39,40 +31,16 @@ public class graf{
             movDat.add(new movieData(ttID, name, rating, votes));
             movieDict.put(ttID, new movieData(ttID, name, rating, votes));
         }
-        sc.close();
-
-        for (movieData movieData : movDat) {
-            //System.out.println(movieData + " " + movieData.ttID);
-        }
-
-        sc = new Scanner(new File(actorsFileName), "UTF-8");
-        BufferedReader read = new BufferedReader(new FileReader(actorsFileName));
-        int antallAct = 0; 
-        while(read.readLine() !=null){
-            antallAct++;
-        }
-        System.out.println("while loop (buffer) har kjørt: " + antallAct);
-
-        antallAct = 0;
-        while(sc.hasNextLine()){
-            sc.nextLine();
-            antallAct++;
-            if(antallAct == 215){
-                System.out.println("debug line");
-            }
-        }
-        sc.close();
-        System.out.println("while loop har kjørt: " + antallAct);
+//-------------------------------------------------------------------------------
 
 
+//---------------------denne leser actor filen-------------------------------------
 
-        
-        sc = new Scanner(new File(actorsFileName));
-        //while den har neste linje ----------------------------------------------
-        //Scanner split;
+        reader = new BufferedReader(new FileReader(actorsFileName));
+        line = null;
         ArrayList<actorData> actorArray = new ArrayList<>();
-        while(sc.hasNextLine()){
-            String[] split = sc.nextLine().split("\t");  //split inneholder: nm0000313	Jeff Bridges	tt0371746
+        while((line = reader.readLine()) != null){
+            String[] split = line.split("\t");  //split inneholder: nm0000313	Jeff Bridges	tt0371746
             String nmID = split[0];
             String name = split[1];
             ArrayList<String> ttIDs = new ArrayList<>();
@@ -83,28 +51,19 @@ public class graf{
             actorArray.add(actor);
             noder++;
             artistDict.put(nmID, actor);
-            for (String string : ttIDs) {
-                if(movieDict.get(string) != null){
-                    movieDict.get(string).actorListe.add(actor);
-                    actor.filmer.add(movieDict.get(string));
+        }
+//-------------------------------------------------------------------------------
+
+
+        for (actorData actorData : actorArray) {
+            for (String ttID : actorData.ttIDs) {
+                if(movieDict.get(ttID) != null){
                     kanter++;
                 }
             }
         }
-        sc.close();
-        System.out.println("\n\n\n\n\n\n");
-        for (actorData actorData : actorArray) {
-            //System.out.println(actorData + " " + actorData.nmID);
-        }
 
-        for (actorData actorData : actorArray) {
-            if(actorData.filmer.size() > 1){
-                //System.out.println(actorData);
-            }
-        }
-
-        System.out.println("\n\n");
-
+        //noder og kanter print
         System.out.println("noder: " + noder);
         System.out.println("kanter: " + kanter);
 
