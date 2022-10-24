@@ -1,7 +1,7 @@
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Map;
 import java.io.BufferedReader;
 
 public class graf{
@@ -10,8 +10,8 @@ public class graf{
 //----------------------generelle variabler------------------------------------
         int noder = 0;
         int kanter = 0;
-        Dictionary<String, actorData> artistDict = new Hashtable<>();
-        Dictionary<String, movieData> movieDict = new Hashtable<>();
+        Map<String, actorData> artistDict = new Hashtable<>();
+        Map<String, movieData> movieDict = new Hashtable<>();
         String actorsFileName = "data/actors.tsv";
         String moviessFileName = "data/movies.tsv";
         BufferedReader reader = new BufferedReader(new FileReader(actorsFileName));
@@ -51,17 +51,23 @@ public class graf{
             actorArray.add(actor);
             noder++;
             artistDict.put(nmID, actor);
-        }
-//-------------------------------------------------------------------------------
-
-
-        for (actorData actorData : actorArray) {
-            for (String ttID : actorData.ttIDs) {
+            for (String ttID : ttIDs) {
+                //denne tar frem film ordboka og legger til spilleren i filmens liste
                 if(movieDict.get(ttID) != null){
-                    kanter++;
+                    movieDict.get(ttID).actorListe.add(actor);
                 }
             }
         }
+//-------------------------------------------------------------------------------
+
+//-----------------denne skal telle kanter--------------------------------------
+
+    for (String data : movieDict.keySet()) {
+        int antallSkuespillere = movieDict.get(data).actorListe.size();
+        kanter = kanter + ((antallSkuespillere * (antallSkuespillere - 1)/2)); //denne gir deg filmen som returneres
+    }
+
+//-------------------------------------------------------------------------------
 
         //noder og kanter print
         System.out.println("noder: " + noder);
