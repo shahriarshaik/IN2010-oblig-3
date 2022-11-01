@@ -1,9 +1,12 @@
 import java.io.FileReader;
+import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.util.Stack;
+
+import javax.swing.plaf.SliderUI;
 
 public class graf{
 
@@ -82,29 +85,42 @@ public class graf{
         return new movNArtcont(artistDict, movieDict);
     }
     
-    static Map<String, String> DFS(movNArtcont grafen, String startN){
+    static Map<String, StrStrCont> DFS(movNArtcont grafen, String startN){
+        
         Map<String, actorData> artistDict = grafen.artistDict; Map<String, movieData> movieDict = grafen.movieDict;
-        Stack<String> que = new Stack<>();
-        que.add(startN);
-        Map<String, String> path;
-        //path.put(startN, startN)
+        
+        Map<String, StrStrCont> path = new Hashtable<>(); path.put(startN, new StrStrCont(null, null));
+        Stack<String> que = new Stack<>(); que.add(startN);
         while(!que.empty()){
             String skuespiller = que.pop();
             for (movieData movie : artistDict.get(skuespiller).filmer) {
+
                 for (actorData actor : movieDict.get(movie.ttID).actorListe) {
                     if(!que.contains(actor.nmID)){
-
+                        path.put(skuespiller, new StrStrCont(skuespiller, movie.ttID));
+                        que.add(actor.nmID);
                     }
                 }
             }
-            System.out.println("burde looope uendelig");
         }
-        Map<String, String> temp = new Hashtable<>();
-        return temp;
+        return path;
     }
     
+    static ArrayList<StrStrCont> shortestpathbetween(movNArtcont grafen, Map<String, StrStrCont> path, String end){
+        StrStrCont point = new StrStrCont(end, null); 
+        ArrayList<StrStrCont> newPath = new ArrayList<>();
+        if(!path.containsKey(end)){
+            return newPath;
+        }
+        while(point.str1 != null){
+            newPath.add(point);
+            point = path.get(point.str1);
+        }
+        return newPath;
+    }
     public static void main(String[] args) throws Exception {
         kanterOgNoder();
         DFS(hentGraf(), "nm2284418");
+        System.out.println("sistelinje");
     }
 }
