@@ -78,13 +78,12 @@ public class graf{
         noderOgKAnter();
     }
 
-    static container hentGraf(){
-        return new container(artistDict, movieDict);
+    static movNArtcont hentGraf(){
+        return new movNArtcont(artistDict, movieDict);
     }
-
-    static Map<String, String> DFS(container grafen, String startN){
-        Map<String, actorData> artistDict = grafen.artistDict;
-        Map<String, movieData> movieDict = grafen.movieDict;
+    
+    static Map<String, String> DFS(movNArtcont grafen, String startN){
+        Map<String, actorData> artistDict = grafen.artistDict; Map<String, movieData> movieDict = grafen.movieDict;
         Stack<String> que = new Stack<>();
         que.add(startN);
         Map<String, String> path;

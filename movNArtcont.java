@@ -1,8 +1,8 @@
 import java.util.Map;
-public class container {
+public class movNArtcont {
     Map<String, actorData> artistDict;
     Map<String, movieData> movieDict;
-    public container(Map<String, actorData> artistDict, Map<String, movieData> movieDict){
+    public movNArtcont(Map<String, actorData> artistDict, Map<String, movieData> movieDict){
         this.artistDict = artistDict;
         this.movieDict = movieDict;
     }
