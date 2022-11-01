@@ -118,6 +118,14 @@ public class graf{
         }
         return newPath;
     }
+
+    static void printPath(movNArtcont grafen, StrStrCont startN, ArrayList<StrStrCont> newPath){
+        Map<String, actorData> artistDict = grafen.artistDict; Map<String, movieData> movieDict = grafen.movieDict;
+        System.out.println(artistDict.get(startN.str1).name);
+        
+    }
+
+
     public static void main(String[] args) throws Exception {
         kanterOgNoder();
         DFS(hentGraf(), "nm2284418");
